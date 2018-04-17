@@ -1,0 +1,13 @@
+#!/bin/sh
+
+test_project_quotas() {
+  for PRJ in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
+    limitrange=`oc get limitrange -n $PRJ | grep -c "[:word:]"`
+    assertNotEquals $limitrange 0
+    resourcequota=`oc get resourcequota -n $PRJ | grep -c "[:word:]"`
+    assertNotEquals $resourcequota 0
+  done
+}
+
+. shunit2
+test_project_quotas

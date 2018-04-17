@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find /etc/openshift-unit.d -name \*_test -type f -exec /bin/sh {} \;

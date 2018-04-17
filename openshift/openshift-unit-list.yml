@@ -1,0 +1,148 @@
+kind: List
+apiVersion: v1
+items:
+-
+  kind: Project
+  metadata:
+    annotations:
+      openshift.io/display-name: OpenShift unit tests
+    name: openshift-unit
+  spec: {}
+  status: {}
+-
+  kind: ServiceAccount
+  apiVersion: v1
+  metadata:
+    name: openshift-unit
+    namespace: openshift-unit
+    labels:
+      app: openshift-unit
+-
+  kind: ClusterRoleBinding
+  apiVersion: v1
+  metadata:
+    name: openshift-unit 
+    namespace: openshift-unit
+    labels:
+      app: openshift-unit
+  roleRef:
+    kind: ClusterRole
+    name: cluster-reader
+  subjects:
+  -
+    kind: ServiceAccount
+    name: openshift-unit
+  userNames:
+  - system:serviceaccount:openshift-unit:openshift-unit
+-
+  kind: RoleBinding
+  apiVersion: v1
+  groupNames: []
+  metadata:
+    name: system:deployers
+    namespace: openshift-unit
+  roleRef:
+    name: system:deployer
+  subjects:
+  -
+    kind: ServiceAccount
+    name: deployer
+  userNames:
+  - system:serviceaccount:openshift-unit:deployer
+-
+  kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: openshift-unit
+    namespace: openshift-unit
+    labels:
+      app: openshift-unit
+  spec:
+    triggers:
+    - type: ConfigChange
+    replicas: 1
+    selector:
+      app: openshift-unit
+      deploymentconfig: openshift-unit
+    template:
+      metadata:
+        labels:
+          app: openshift-unit
+          deploymentconfig: openshift-unit
+      spec:
+        serviceAccountName: openshift-unit
+        serviceAccount: openshift-unit
+        containers:
+        - name: openshift-unit
+          image: gerald1248/openshift-unit
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          env:
+          - name: POD_NAMESPACE
+            value: openshift
+          volumeMounts:
+          - name: openshift-unit-volume
+            mountPath: /etc/openshift-unit.d
+        volumes:
+        - name: openshift-unit-volume
+          configMap:
+            name: openshift-unit
+-
+  kind: LimitRange
+  apiVersion: v1
+  metadata:
+    name: openshift-unit
+    namespace: openshift-unit
+    labels:
+      app: openshift-unit
+  spec:
+    limits:
+    -
+      type: Container
+      default:
+        cpu: 400m
+        memory: 1Gi
+      defaultRequest:
+        cpu: 200m
+        memory: 512Mi
+-
+  kind: ResourceQuota
+  apiVersion: v1
+  metadata:
+    name: openshift-unit
+    namespace: openshift-unit
+    labels:
+      app: openshift-unit
+  spec:
+    hard:
+      pods: "4" # deployer + running pod + replacement + spare
+      requests.cpu: 800m
+      requests.memory: 2Gi
+      limits.cpu: 1600m
+      limits.memory: 4Gi
+-
+  kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: openshift-unit
+    namespace: openshift-unit
+    labels:
+      app: openshift-unit
+  data:
+    cluster_test: |
+      #!/bin/sh
+      test_project_quotas() {
+        for PRJ in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d" " -f1`; do
+          limitrange=`oc get limitrange -n $PRJ | grep -c "[:word:]"`
+          assertNotEquals $limitrange 0
+          resourcequota=`oc get resourcequota -n $PRJ | grep -c "[:word:]"`
+          assertNotEquals $resourcequota 0
+        done
+      }
+      . shunit2
+      test_project_quotas
