@@ -21,6 +21,6 @@ data:
     . shunit2
     test_project_quotas
   nodes_test: "#!/bin/sh\n\ntest_nodes() {\n  for node in `oc get nodes | cut -d\"
-    \" -f1 | grep -v NAME`; do\n    \n    ready=`oc get node localhost -o json | jq
+    \" -f1 | grep -v NAME`; do\n    \n    ready=`oc get node ${node} -o json | jq
     -r '.status.conditions[] | select(.type==\"Ready\") | .status'`\n    assertEquals
     \"node ${node} not ready\" $ready \"True\"\n  done\n}\n\n. shunit2\ntest_nodes\n"

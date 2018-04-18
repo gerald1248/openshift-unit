@@ -3,7 +3,7 @@
 test_nodes() {
   for node in `oc get nodes | cut -d" " -f1 | grep -v NAME`; do
     
-    ready=`oc get node localhost -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
+    ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
     assertEquals "node ${node} not ready" $ready "True"
   done
 }
