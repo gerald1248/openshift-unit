@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_nodes() {
+test_nodes_ready() {
   for node in `oc get nodes | cut -d" " -f1 | grep -v NAME`; do
     
     ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
@@ -8,5 +8,12 @@ test_nodes() {
   done
 }
 
+test_nodes_no_warnings() {
+  for node in `oc get nodes | cut -d" " -f1 | grep -v NAME`; do
+    warnings=`oc describe node/${node} | grep -a64 "^Events:" | grep "Warn" | grep -c "[:word:]"`
+    echo $warnings
+    assertEquals "node ${node} has warnings" ${warnings} 0
+  done
+}
+
 . shunit2
-test_nodes
