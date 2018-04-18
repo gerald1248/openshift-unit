@@ -6,7 +6,7 @@ Test scripts have cluster-reader access to the cluster. A range of tools includi
 
 ## Fetch image from Docker Hub
 ```
-$ oc create -f openshift/openshift-unit-list.yml
+$ ./oc-create.sh
 $ oc get po
 NAME                     READY     STATUS    RESTARTS   AGE
 openshift-unit-1-bcp2d   1/1       Running   0          4m$ 

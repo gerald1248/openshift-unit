@@ -1,0 +1,16 @@
+kind: ClusterRoleBinding
+apiVersion: v1
+metadata:
+  name: openshift-unit 
+  namespace: openshift-unit
+  labels:
+    app: openshift-unit
+roleRef:
+  kind: ClusterRole
+  name: cluster-reader
+subjects:
+-
+  kind: ServiceAccount
+  name: openshift-unit
+userNames:
+- system:serviceaccount:openshift-unit:openshift-unit

@@ -1,0 +1,14 @@
+kind: RoleBinding
+apiVersion: v1
+groupNames: []
+metadata:
+  name: system:deployers
+  namespace: openshift-unit
+roleRef:
+  name: system:deployer
+subjects:
+-
+  kind: ServiceAccount
+  name: deployer
+userNames:
+- system:serviceaccount:openshift-unit:deployer
