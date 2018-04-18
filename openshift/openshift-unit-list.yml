@@ -134,15 +134,21 @@ items:
     labels:
       app: openshift-unit
   data:
-    cluster_test: |
+    limits_test: |
       #!/bin/sh
+
       test_project_quotas() {
-        for PRJ in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d" " -f1`; do
-          limitrange=`oc get limitrange -n $PRJ | grep -c "[:word:]"`
-          assertNotEquals $limitrange 0
-          resourcequota=`oc get resourcequota -n $PRJ | grep -c "[:word:]"`
-          assertNotEquals $resourcequota 0
+        for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
+          limitrange=`oc get limitrange -n ${project} | grep -c "[:word:]"`
+          assertNotEquals "limitrange not set in project ${project}" $limitrange 0
+          resourcequota=`oc get resourcequota -n ${project} | grep -c "[:word:]"`
+          assertNotEquals "resourcequota not set in project ${project}" $resourcequota 0
         done
       }
+
       . shunit2
       test_project_quotas
+    nodes_test: "#!/bin/sh\n\ntest_nodes() {\n  for node in `oc get nodes | cut -d\"
+      \" -f1 | grep -v NAME`; do\n    \n    ready=`oc get node localhost -o json | jq
+      -r '.status.conditions[] | select(.type==\"Ready\") | .status'`\n    assertEquals
+      \"node ${node} not ready\" $ready \"True\"\n  done\n}\n\n. shunit2\ntest_nodes\n"
