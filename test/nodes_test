@@ -7,7 +7,7 @@ test_nodes_ready() {
 }
 test_nodes_no_warnings() {
   for node in `oc get nodes | cut -d" " -f1 | tail -n +2`; do
-    warnings=`oc describe node/${node} | grep -a64 "^Events:" | grep "Warn" | grep -c "[:word:]"`
+    warnings=`oc describe node/${node} | grep -A64 "^Events:" | grep "Warn" | grep -c "[:word:]"`
     assertEquals "node ${node} has warnings" ${warnings} 0
   done
 }

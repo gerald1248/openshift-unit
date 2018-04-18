@@ -11,23 +11,16 @@ $ oc get po
 NAME                     READY     STATUS    RESTARTS   AGE
 openshift-unit-1-bcp2d   1/1       Running   0          4m$ 
 $ oc exec openshift-unit-1-bcp2d openshift-unit
-test_nodes
-
-Ran 1 test.
-
-OK
-test_project_quotas
-
-Ran 1 test.
-
+...
 OK
 ```
 
 ## Adding tests
 To add your own tests, populate the folder `test` with additional scripts. To create an updated ConfigMap, run:
 ```
-$ oc create configmap openshift-unit --from-file=test/
+$ ./update-configmap.sh
 ```
+This will create (or replace) the configmap from the contents of the `test` folder.
 
 ## Building the image
 Use the script `docker-build.sh` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
