@@ -1,5 +1,4 @@
 #!/bin/sh
-
 test_project_quotas() {
   for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
     limitrange=`oc get limitrange -n ${project} | grep -c "[:word:]"`
@@ -8,6 +7,4 @@ test_project_quotas() {
     assertNotEquals "resourcequota not set in project ${project}" $resourcequota 0
   done
 }
-
 . shunit2
-test_project_quotas
