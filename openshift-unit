@@ -1,2 +1,8 @@
 #!/bin/sh
-find /etc/openshift-unit.d -name \*_test -type f -exec /bin/sh {} \;
+suite() {
+  for testscript in `find /etc/openshift-unit.d/ -name \*_test -type f`; do
+    . ${testscript}
+  done
+}
+. shunit2
+

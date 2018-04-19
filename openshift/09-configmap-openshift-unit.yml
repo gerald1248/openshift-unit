@@ -4,13 +4,13 @@ data:
     #!/bin/sh
     test_project_quotas() {
       for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
-        limitrange=`oc get limitrange -n ${project} | grep -c "[:word:]"`
+        limitrange=`oc get limitrange -n ${project} | wc -l`
         assertNotEquals "limitrange not set in project ${project}" $limitrange 0
-        resourcequota=`oc get resourcequota -n ${project} | grep -c "[:word:]"`
+        resourcequota=`oc get resourcequota -n ${project} | wc -l`
         assertNotEquals "resourcequota not set in project ${project}" $resourcequota 0
       done
     }
-    . shunit2
+    suite_addTest test_project_quotas
   nodes_test: |
     #!/bin/sh
     test_nodes_ready() {
@@ -21,22 +21,23 @@ data:
     }
     test_nodes_no_warnings() {
       for node in `oc get nodes | cut -d" " -f1 | tail -n +2`; do
-        warnings=`oc describe node/${node} | grep -A64 "^Events:" | grep "Warn" | grep -c "[:word:]"`
-        assertEquals "node ${node} has warnings" ${warnings} 0
+        warnings=`oc describe node/${node} | grep -A64 "^Events:" | grep "Warn" | wc -l`
+        assertEquals "node ${node} has warnings" 0 ${warnings}
       done
     }
-    . shunit2
+    suite_addTest test_nodes_ready
+    suite_addTest test_nodes_no_warnings
   privileged_test: |
     #!/bin/sh
     test_security_context_privileged() {
-      for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
-        for pod in `oc get po -n ${project}`; do
+      for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`; do
+        for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
           count_privileged=`oc export po/${pod} -n ${project} -o json | jq -r '..|.securityContext?.privileged' | grep -c true`
           assertEquals "pod ${pod} in project ${project} runs with privileged security context" ${count_privileged} 0
         done
       done
     }
-    . shunit2
+    suite_addTest test_security_context_privileged
 kind: ConfigMap
 metadata:
   creationTimestamp: null

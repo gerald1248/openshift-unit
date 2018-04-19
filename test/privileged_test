@@ -1,10 +1,10 @@
 #!/bin/sh
 test_security_context_privileged() {
-  for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
-    for pod in `oc get po -n ${project}`; do
+  for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`; do
+    for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
       count_privileged=`oc export po/${pod} -n ${project} -o json | jq -r '..|.securityContext?.privileged' | grep -c true`
       assertEquals "pod ${pod} in project ${project} runs with privileged security context" ${count_privileged} 0
     done
   done
 }
-. shunit2
+suite_addTest test_security_context_privileged
