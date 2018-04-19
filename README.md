@@ -10,6 +10,9 @@ $ ./oc-create.sh
 $ oc get po
 NAME                     READY     STATUS    RESTARTS   AGE
 openshift-unit-1-bcp2d   1/1       Running   0          4m 
+```
+You can now wait for the CronJob to run the tests at ten past midnight (the default). If you'd rather not wait until midnight, enter:
+```
 $ oc exec openshift-unit-1-bcp2d openshift-unit
 test_nodes_ready
 test_nodes_no_warnings
