@@ -3,11 +3,11 @@ data:
   limits_test: |
     #!/bin/sh
     test_project_quotas() {
-      for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | grep -v NAME | cut -d' ' -f1`; do
+      for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`; do
         limitrange=`oc get limitrange -n ${project} | wc -l`
-        assertNotEquals "limitrange not set in project ${project}" $limitrange 0
+        assertNotEquals " limitrange not set in project ${project}:" $limitrange 0
         resourcequota=`oc get resourcequota -n ${project} | wc -l`
-        assertNotEquals "resourcequota not set in project ${project}" $resourcequota 0
+        assertNotEquals " resourcequota not set in project ${project}:" $resourcequota 0
       done
     }
     suite_addTest test_project_quotas
@@ -16,13 +16,13 @@ data:
     test_nodes_ready() {
       for node in `oc get nodes | cut -d" " -f1 | tail -n +2`; do
         ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
-        assertEquals "node ${node} not ready" $ready "True"
+        assertEquals " node ${node} not ready:" $ready "True"
       done
     }
     test_nodes_no_warnings() {
       for node in `oc get nodes | cut -d" " -f1 | tail -n +2`; do
         warnings=`oc describe node/${node} | grep -A64 "^Events:" | grep "Warn" | wc -l`
-        assertEquals "node ${node} has warnings" 0 ${warnings}
+        assertEquals " node ${node} has warnings:" 0 ${warnings}
       done
     }
     suite_addTest test_nodes_ready
@@ -33,7 +33,7 @@ data:
       for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`; do
         for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
           count_privileged=`oc export po/${pod} -n ${project} -o json | jq -r '..|.securityContext?.privileged' | grep -c true`
-          assertEquals "pod ${pod} in project ${project} runs with privileged security context" ${count_privileged} 0
+          assertEquals " pod ${pod} in project ${project} runs with privileged security context:" ${count_privileged} 0
         done
       done
     }

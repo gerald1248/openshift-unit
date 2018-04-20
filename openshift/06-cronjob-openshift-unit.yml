@@ -29,9 +29,7 @@ spec:
             args:
             - /bin/sh
             - -c
-            - openshift-unit
-            - ||
-            - true
+            - openshift-unit || true
             env:
             - name: POD_NAMESPACE
               value: openshift-unit
