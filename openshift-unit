@@ -5,4 +5,4 @@ suite() {
   done
 }
 . shunit2
-
+exit 0

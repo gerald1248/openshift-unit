@@ -33,7 +33,7 @@ if [ ! -f downloads/oc ] || [ $DOWNLOAD_ALWAYS -gt 0 ]; then
     exit 1
   fi
   echo "Downloading $OC_URL"
-  curl -L $OC_URL -o /downloads/oc.tar.gz && tar -xf /downloads/oc.tar.gz -C downloads/ && cp /downloads/openshift-origin-client-tools-*/oc downloads/
+  curl -L $OC_URL -o downloads/oc.tar.gz && tar -xf downloads/oc.tar.gz -C downloads/ && cp downloads/openshift-origin-client-tools-*/oc downloads/
 fi
 
 docker build -t openshift-unit:$OPENSHIFT_UNIT_VERSION .
