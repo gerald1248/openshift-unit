@@ -4,7 +4,7 @@ LABEL description="Unit tests for OpenShift clusters"
 RUN apk add --no-cache curl bind-tools apache2-utils mysql-client postgresql-client jq
 ADD downloads/shunit2 /usr/bin/
 ADD downloads/oc /usr/bin/
-ADD openshift-unit /usr/bin/
+ADD bin/openshift-unit /usr/bin/
 RUN addgroup -S app && adduser -S -g app app && \
   mkdir /etc/openshift-unit.d && \
   chown app:app /etc/openshift-unit.d

@@ -30,6 +30,8 @@ spec:
             - /bin/sh
             - -c
             - openshift-unit
+            - ||
+            - true
             env:
             - name: POD_NAMESPACE
               value: openshift-unit

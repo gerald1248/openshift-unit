@@ -4,5 +4,5 @@ suite() {
     . ${testscript}
   done
 }
+
 . shunit2
-exit 0

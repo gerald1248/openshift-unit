@@ -46,3 +46,10 @@ The script `cleanup.sh` will remove the project `openshift-unit` and the `cluste
 Use the script `docker-build.sh` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
 
 Tag the image as desired and upload to Docker Hub or a private registry as appropriate.
+
+## Note on versions
+The default image on Docker Hub ships with the current stable build of the `oc` client. You may wish to adjust the version tag in the `docker-build.sh` script and create an image that matches your cluster exactly.
+
+OpenShift versions prior to 3.9 (and Kubernetes versions prior to 1.8) offer limited support for CronJob objects (the version attribute has `v2alpha1`). If a process fails, the v2 alpha CronJob will keep spawning containers until a container returns 0. The problem is exacerbated by the fact that the CronJob object in these OpenShift builds does not recognise the cleanup properties reducing the number of `completed` or `error` pods kept.
+
+To deal with this (and until most OpenShift installations are on 3.9 or higher), the CronJob always returns zero.
