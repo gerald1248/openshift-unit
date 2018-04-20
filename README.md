@@ -7,6 +7,15 @@ Test scripts have cluster-reader access to the cluster. A range of tools includi
 ## Fetch image from Docker Hub
 ```
 $ ./oc-create.sh
+project "openshift-unit" created
+serviceaccount "openshift-unit" created
+cronjob "openshift-unit" created
+rolebinding "system:deployers" created
+deploymentconfig "openshift-unit" created
+clusterrolebinding "openshift-unit" created
+limitrange "openshift-unit" created
+resourcequota "openshift-unit" created
+configmap "openshift-unit" created
 $ oc get po
 NAME                     READY     STATUS    RESTARTS   AGE
 openshift-unit-1-bcp2d   1/1       Running   0          4m 
