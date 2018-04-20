@@ -23,11 +23,12 @@ openshift-unit-1-bcp2d   1/1       Running   0          4m
 You can now wait for the CronJob to run the tests at ten past midnight (the default). If you'd rather not wait until midnight, enter:
 ```
 $ oc exec openshift-unit-1-bcp2d openshift-unit
+test_project_quotas
 test_nodes_ready
 test_nodes_no_warnings
-test_project_quotas
+test_security_context_privileged
 
-Ran 5 tests.
+Ran 4 tests.
 
 OK
 ```
@@ -40,7 +41,7 @@ $ ./update-configmap.sh
 This will create the configmap from the contents of the `test` folder.
 
 ## Cleanup
-The script `cleanup.sh` will remove the project `openshift-unit` and the `cluster-reader` clusterrolebinding for serviceaccount `openshift-unit`.
+The script `cleanup.sh` will remove the project `openshift-unit` and the `clusterrolebinding` that gives the serviceaccount `openshift-unit` read-only access to all projects.
 
 ## Building the image
 Use the script `docker-build.sh` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
@@ -50,6 +51,6 @@ Tag the image as desired and upload to Docker Hub or a private registry as appro
 ## Note on versions
 The default image on Docker Hub ships with the current stable build of the `oc` client. You may wish to adjust the version tag in the `docker-build.sh` script and create an image that matches your cluster exactly.
 
-OpenShift versions prior to 3.9 (and Kubernetes versions prior to 1.8) offer limited support for CronJob objects (the version attribute has `v2alpha1`). If a process fails, the v2 alpha CronJob will keep spawning containers until a container returns 0. The problem is exacerbated by the fact that the CronJob object in these OpenShift builds does not recognise the cleanup properties reducing the number of `completed` or `error` pods kept.
+OpenShift versions prior to 3.9 (and Kubernetes versions prior to 1.8) offer limited support for CronJob objects (the version attribute has `v2alpha1`). If a process fails, the v2 alpha CronJob will keep spawning containers until a container returns zero. The problem is exacerbated by the fact that the CronJob object in these OpenShift builds does not recognise the cleanup properties reducing the number of `completed` or `error` pods kept.
 
 To deal with this (and until most OpenShift installations are on 3.9 or higher), the CronJob always returns zero.
