@@ -1,6 +1,6 @@
 #!/bin/sh
 test_project_quotas() {
-  for project in `oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`; do
+  for project in ${USER_PROJECTS}; do
     limitrange=`oc get limitrange -n ${project} | wc -l`
     assertNotEquals " limitrange not set in project ${project};" $limitrange 0
     resourcequota=`oc get resourcequota -n ${project} | wc -l`

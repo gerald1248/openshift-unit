@@ -1,6 +1,8 @@
 #!/bin/sh
 suite() {
-  for testscript in `find /etc/openshift-unit.d/ -name \*_test -type f`; do
+  datadir="/etc/openshift-unit.d/"
+  . ${datadir}exports
+  for testscript in `find ${datadir} -name \*_test -type f`; do
     . ${testscript}
   done
 }
