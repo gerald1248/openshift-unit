@@ -1,10 +1,17 @@
-# OpenShift unit tests
+# Simple OpenShift cluster tests
 
-Cluster unit testing using `oc` and `shunit2`. The test pod mounts the test scripts and runs each one in turn.
+Use `openshift-unit` to test those aspects of your OpenShift cluster that are not already covered by monitoring and health checks. Run tests periodically with read access to all projects but without special privileges.
 
-Test scripts have cluster-reader access to the cluster. A range of tools including `oc`, `jq`, `curl`and `psql` is pre-installed.
+For example, you could assert that:
 
-## Fetch image from Docker Hub
+* the groups `system:authenticated` and `system:authenticated:oauth` must not be given the role `self-provisioner`
+* service account `default` must not have security context constraint `anyuid` (ideally the rule would apply to all service accounts) 
+* pods in user projects must not run in privileged security context
+* and so on
+
+The test pod has `oc`, `curl`, `jq`, `psql` and so on to examine the cluster from within, with `cluster-reader` access. It mounts the test scripts (stored in a ConfigMap) and runs each one in turn.
+
+## TL/DR
 ```
 $ ./oc-create.sh
 project "openshift-unit" created
@@ -19,9 +26,6 @@ configmap "openshift-unit" created
 $ oc get po
 NAME                     READY     STATUS    RESTARTS   AGE
 openshift-unit-1-bcp2d   1/1       Running   0          4m 
-```
-You can now wait for the CronJob to run the tests at ten past midnight (the default). If you'd rather not wait until midnight, enter:
-```
 $ oc exec openshift-unit-1-bcp2d openshift-unit
 test_project_quotas
 test_nodes_ready
@@ -33,15 +37,15 @@ Ran 4 tests.
 OK
 ```
 
-## Adding tests
-To add your own tests, populate the folder `test` with additional files (containing functions and an instruction to add them to the test suite). To create an updated ConfigMap, run:
+## Writing your own tests
+To add tests, populate the folder `test` with additional files (each containing one or more Bash functions and an instruction to add them to the test suite). To update the ConfigMap, run:
 ```
 $ ./update-configmap.sh
 ```
-This will create the configmap from the contents of the `test` folder.
+This will refresh the configmap from the contents of the `test` folder.
 
 ## Cleanup
-The script `cleanup.sh` will remove the project `openshift-unit` and the `clusterrolebinding` that gives the serviceaccount `openshift-unit` read-only access to all projects.
+The script `cleanup.sh` will remove the project `openshift-unit` and the rolebinding that gives the serviceaccount `openshift-unit` read-only access to all projects.
 
 ## Building the image
 Use the script `docker-build.sh` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
