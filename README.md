@@ -1,4 +1,4 @@
-# Simple OpenShift cluster tests
+# OpenShift cluster tests
 
 Use `openshift-unit` to test those aspects of your OpenShift cluster that are not already covered by monitoring and health checks. Run tests periodically with read access to all projects but without special privileges.
 
@@ -8,6 +8,17 @@ For example, you could assert that:
 * service account `default` must not have security context constraint `anyuid` (ideally the rule would apply to all service accounts) 
 * pods in user projects must not run in privileged security context
 * and so on
+
+The default set of tests includes the following:
+```
+test
+├── anyuid_test
+├── exports
+├── limits_test
+├── nodes_test
+├── privileged_test
+└── self_provisioner_test
+```
 
 The test pod has `oc`, `curl`, `jq`, `psql` and so on to examine the cluster from within, with `cluster-reader` access. It mounts the test scripts (stored in a ConfigMap) and runs each one in turn.
 
