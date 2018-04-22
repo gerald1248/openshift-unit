@@ -1,9 +1,18 @@
 apiVersion: v1
 data:
+  anyuid_test: |
+    #!/bin/sh
+    test_anyuid() {
+      for project in ${USER_PROJECTS}; do
+        count_anyuid_default=`oc describe scc anyuid -n ${project} | grep "Users:.*system:serviceaccount:.*:default" | wc -l`
+        assertEquals " service account default in project ${project};" ${count_anyuid_default} 0
+      done
+    }
+    suite_addTest test_anyuid
   exports: |
     #!/bin/sh
     export USER_PROJECTS=`oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
-    export NODES=
+    export NODES=`oc get nodes | cut -d' ' -f1 | tail -n +2`
   limits_test: |
     #!/bin/sh
     test_project_quotas() {
@@ -42,6 +51,13 @@ data:
       done
     }
     suite_addTest test_security_context_privileged
+  self_provisioner_test: |
+    #!/bin/sh
+    test_self_provisioner() {
+      count_self_provisioner=`oc adm policy who-can create projectrequests | grep system:authenticated | wc -l`
+      assertEquals " authenticated users must not create project requests;" ${count_self_provisioner} 0
+    }
+    suite_addTest test_self_provisioner
 kind: ConfigMap
 metadata:
   creationTimestamp: null
