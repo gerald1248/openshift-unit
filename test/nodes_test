@@ -2,7 +2,7 @@
 test_nodes_ready() {
   for node in ${NODES}; do
     ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
-    assertEquals " node ${node} not ready;" $ready "True"
+    assertEquals " node ${node} not ready;" "True" $ready
   done
 }
 test_nodes_no_warnings() {

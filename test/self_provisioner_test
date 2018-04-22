@@ -1,6 +1,6 @@
 #!/bin/sh
 test_self_provisioner() {
   count_self_provisioner=`oc adm policy who-can create projectrequests | grep system:authenticated | wc -l`
-  assertEquals " authenticated users must not create project requests;" ${count_self_provisioner} 0
+  assertEquals " authenticated users must not create project requests;" 0 ${count_self_provisioner}
 }
 suite_addTest test_self_provisioner

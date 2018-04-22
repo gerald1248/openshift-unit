@@ -5,7 +5,7 @@ data:
     test_anyuid() {
       for project in ${USER_PROJECTS}; do
         count_anyuid_default=`oc describe scc anyuid -n ${project} | grep "Users:.*system:serviceaccount:.*:default" | wc -l`
-        assertEquals " service account default in project ${project};" ${count_anyuid_default} 0
+        assertEquals " service account default in project ${project};" 0 ${count_anyuid_default}
       done
     }
     suite_addTest test_anyuid
@@ -18,9 +18,9 @@ data:
     test_project_quotas() {
       for project in ${USER_PROJECTS}; do
         limitrange=`oc get limitrange -n ${project} | wc -l`
-        assertNotEquals " limitrange not set in project ${project};" $limitrange 0
+        assertNotEquals " limitrange not set in project ${project};" 0 $limitrange
         resourcequota=`oc get resourcequota -n ${project} | wc -l`
-        assertNotEquals " resourcequota not set in project ${project};" $resourcequota 0
+        assertNotEquals " resourcequota not set in project ${project};" 0 $resourcequota
       done
     }
     suite_addTest test_project_quotas
@@ -29,7 +29,7 @@ data:
     test_nodes_ready() {
       for node in ${NODES}; do
         ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
-        assertEquals " node ${node} not ready;" $ready "True"
+        assertEquals " node ${node} not ready;" "True" $ready
       done
     }
     test_nodes_no_warnings() {
@@ -46,7 +46,7 @@ data:
       for project in ${USER_PROJECTS}; do
         for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
           count_privileged=`oc export po/${pod} -n ${project} -o json | jq -r '..|.securityContext?.privileged' | grep -c true`
-          assertEquals " pod ${pod} in project ${project} runs with privileged security context;" ${count_privileged} 0
+          assertEquals " pod ${pod} in project ${project} runs with privileged security context;" 0 ${count_privileged}
         done
       done
     }
@@ -55,7 +55,7 @@ data:
     #!/bin/sh
     test_self_provisioner() {
       count_self_provisioner=`oc adm policy who-can create projectrequests | grep system:authenticated | wc -l`
-      assertEquals " authenticated users must not create project requests;" ${count_self_provisioner} 0
+      assertEquals " authenticated users must not create project requests;" 0 ${count_self_provisioner}
     }
     suite_addTest test_self_provisioner
 kind: ConfigMap
