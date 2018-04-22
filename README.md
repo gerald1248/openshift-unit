@@ -20,9 +20,11 @@ test
 └── self_provisioner_test
 ```
 
+The `exports` file exports variables such as `USER_PROJECTS` and `NODES`, which can then be used and reused freely in tests.
+
 The test pod has `oc`, `curl`, `jq`, `psql` and so on to examine the cluster from within, with `cluster-reader` access. It mounts the test scripts (stored in a ConfigMap) and runs each one in turn.
 
-## TL/DR
+## Run the tests
 ```
 $ ./oc-create.sh
 project "openshift-unit" created
