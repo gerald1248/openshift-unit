@@ -31,8 +31,10 @@ test_project_quotas
 test_nodes_ready
 test_nodes_no_warnings
 test_security_context_privileged
+test_anyuid
+test_self_provisioner
 
-Ran 4 tests.
+Ran 6 tests.
 
 OK
 ```
