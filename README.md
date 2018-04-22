@@ -1,5 +1,7 @@
 # OpenShift cluster tests
 
+![Overview of openshift-unit](ditaa/chart.png)
+
 Use `openshift-unit` to test those aspects of your OpenShift cluster that are not already covered by monitoring and health checks. Run tests periodically with read access to all projects but without special privileges.
 
 For example, you could assert that:
