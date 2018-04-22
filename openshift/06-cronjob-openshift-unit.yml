@@ -6,7 +6,7 @@ metadata:
   labels:
     app: openshift-unit
 spec:
-  schedule: "10 0 * * *"
+  schedule: "30 0 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
