@@ -3,8 +3,9 @@ data:
   anyuid_test: |
     #!/bin/sh
     test_anyuid() {
+      scc_anyuid=`oc describe scc anyuid`
       for project in ${USER_PROJECTS}; do
-        count_anyuid_default=`oc describe scc anyuid -n ${project} | grep "Users:.*system:serviceaccount:.*:default" | wc -l`
+        count_anyuid_default=`echo ${scc_anyuid} | grep "Users:.*system:serviceaccount:${project}:default" | wc -l`
         assertEquals " service account default in project ${project};" 0 ${count_anyuid_default}
       done
     }
@@ -17,10 +18,11 @@ data:
     #!/bin/sh
     test_project_quotas() {
       for project in ${USER_PROJECTS}; do
-        limitrange=`oc get limitrange -n ${project} | wc -l`
-        assertNotEquals " limitrange not set in project ${project};" 0 $limitrange
-        resourcequota=`oc get resourcequota -n ${project} | wc -l`
-        assertNotEquals " resourcequota not set in project ${project};" 0 $resourcequota
+        # only proceed if no ClusterResourceQuota for the project set
+        if [ -z `oc describe AppliedClusterResourceQuota -n ${project}` ]; then
+          resourcequota=`oc get resourcequota -n ${project} | wc -l`
+          assertNotEquals " resourcequota not set in project ${project};" 0 $resourcequota
+        fi
       done
     }
     suite_addTest test_project_quotas
@@ -62,3 +64,4 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: openshift-unit
+  namespace: openshift-unit
