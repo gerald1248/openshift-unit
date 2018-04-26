@@ -1,21 +1,18 @@
 apiVersion: v1
 data:
   anyuid_test: |
-    #!/bin/sh
     test_anyuid() {
       scc_anyuid=`oc describe scc anyuid`
       for project in ${USER_PROJECTS}; do
         count_anyuid_default=`echo ${scc_anyuid} | grep "Users:.*system:serviceaccount:${project}:default" | wc -l`
-        assertEquals " service account default in project ${project};" 0 ${count_anyuid_default}
+        assertEquals " service account default in project ${project} has SCC anyuid;" 0 ${count_anyuid_default}
       done
     }
     suite_addTest test_anyuid
   exports: |
-    #!/bin/sh
     export USER_PROJECTS=`oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
     export NODES=`oc get nodes | cut -d' ' -f1 | tail -n +2`
   limits_test: |
-    #!/bin/sh
     test_project_quotas() {
       for project in ${USER_PROJECTS}; do
         # only proceed if no ClusterResourceQuota for the project set
@@ -27,7 +24,6 @@ data:
     }
     suite_addTest test_project_quotas
   nodes_test: |
-    #!/bin/sh
     test_nodes_ready() {
       for node in ${NODES}; do
         ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
@@ -43,7 +39,6 @@ data:
     suite_addTest test_nodes_ready
     suite_addTest test_nodes_no_warnings
   privileged_test: |
-    #!/bin/sh
     test_security_context_privileged() {
       for project in ${USER_PROJECTS}; do
         for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
@@ -54,7 +49,6 @@ data:
     }
     suite_addTest test_security_context_privileged
   self_provisioner_test: |
-    #!/bin/sh
     test_self_provisioner() {
       count_self_provisioner=`oc adm policy who-can create projectrequests | grep system:authenticated | wc -l`
       assertEquals " authenticated users must not create project requests;" 0 ${count_self_provisioner}

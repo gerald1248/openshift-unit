@@ -1,9 +1,8 @@
-#!/bin/sh
 test_anyuid() {
   scc_anyuid=`oc describe scc anyuid`
   for project in ${USER_PROJECTS}; do
     count_anyuid_default=`echo ${scc_anyuid} | grep "Users:.*system:serviceaccount:${project}:default" | wc -l`
-    assertEquals " service account default in project ${project};" 0 ${count_anyuid_default}
+    assertEquals " service account default in project ${project} has SCC anyuid;" 0 ${count_anyuid_default}
   done
 }
 suite_addTest test_anyuid

@@ -1,4 +1,3 @@
-#!/bin/sh
 test_project_quotas() {
   for project in ${USER_PROJECTS}; do
     # only proceed if no ClusterResourceQuota for the project set

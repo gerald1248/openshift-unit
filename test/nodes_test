@@ -1,4 +1,3 @@
-#!/bin/sh
 test_nodes_ready() {
   for node in ${NODES}; do
     ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
