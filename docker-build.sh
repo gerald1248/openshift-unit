@@ -27,7 +27,7 @@ if [ ! -f downloads/shunit2 ] || [ $DOWNLOAD_ALWAYS -gt 0 ]; then
 fi
 
 if [ ! -f downloads/oc ] || [ $DOWNLOAD_ALWAYS -gt 0 ]; then
-  OC_URL=`curl -s https://api.github.com/repos/openshift/origin/releases/latest | jq -cr '.assets[] | select( .name | contains(".tar.gz"))' | head -n1 | jq -rc '.browser_download_url'`
+  OC_URL=`curl -s https://api.github.com/repos/openshift/origin/releases/${OC_VERSION} | jq -cr '.assets[] | select( .name | contains(".tar.gz"))' | head -n1 | jq -rc '.browser_download_url'`
   if [ -z $OC_URL ]; then
     echo "Can't determine oc download URL"
     exit 1
