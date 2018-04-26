@@ -9,4 +9,7 @@ clean:
 build:
 	./docker-build.sh
 
+update:
+	./update-configmap.sh
+
 default: create

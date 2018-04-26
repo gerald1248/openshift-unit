@@ -28,7 +28,7 @@ The test pod has `oc`, `curl`, `jq`, `psql` and so on to examine the cluster fro
 
 ## Run the tests
 ```
-$ ./oc-create.sh
+$ make
 project "openshift-unit" created
 serviceaccount "openshift-unit" created
 cronjob "openshift-unit" created
@@ -57,7 +57,7 @@ OK
 ## Writing your own tests
 To add tests, populate the folder `test` with additional files (each containing one or more Bash functions and an instruction to add them to the test suite). To update the ConfigMap, run:
 ```
-$ ./update-configmap.sh
+$ make update
 ```
 This will refresh the configmap from the contents of the `test` folder.
 
@@ -65,7 +65,7 @@ This will refresh the configmap from the contents of the `test` folder.
 The script `cleanup.sh` will remove the project `openshift-unit` and the rolebinding that gives the serviceaccount `openshift-unit` read-only access to all projects.
 
 ## Building the image
-Use the script `docker-build.sh` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
+Run `make build` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
 
 Tag the image as desired and upload to Docker Hub or a private registry as appropriate.
 
