@@ -1,2 +1,2 @@
-export USER_PROJECTS=`oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
-export NODES=`oc get nodes | cut -d' ' -f1 | tail -n +2`
+export USER_PROJECTS=`oc get projects 2>/dev/null | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
+export NODES=`oc get nodes 2>/dev/null| cut -d' ' -f1 | tail -n +2`

@@ -2,23 +2,23 @@ apiVersion: v1
 data:
   anyuid_test: |
     test_anyuid() {
-      scc_anyuid=`oc describe scc anyuid`
+      scc_anyuid=`oc describe scc anyuid 2>/dev/null`
       for project in ${USER_PROJECTS}; do
-        count_anyuid_default=`echo ${scc_anyuid} | grep "Users:.*system:serviceaccount:${project}:default" | wc -l`
+        count_anyuid_default=`echo ${scc_anyuid} | grep -c "Users:.*system:serviceaccount:${project}:default"`
         assertEquals " service account default in project ${project} has SCC anyuid;" 0 ${count_anyuid_default}
       done
     }
     suite_addTest test_anyuid
   exports: |
-    export USER_PROJECTS=`oc get projects | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
-    export NODES=`oc get nodes | cut -d' ' -f1 | tail -n +2`
+    export USER_PROJECTS=`oc get projects 2>/dev/null | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
+    export NODES=`oc get nodes 2>/dev/null| cut -d' ' -f1 | tail -n +2`
   limits_test: |
     test_project_quotas() {
       for project in ${USER_PROJECTS}; do
         # only proceed if no ClusterResourceQuota for the project set
-        if [ -z `oc describe AppliedClusterResourceQuota -n ${project}` ]; then
-          resourcequota=`oc get resourcequota -n ${project} | wc -l`
-          assertNotEquals " resourcequota not set in project ${project};" 0 $resourcequota
+        if [ -z `oc describe AppliedClusterResourceQuota -n ${project} 2>/dev/null` ]; then
+          resourcequota=`oc get resourcequota -n ${project} 2>/dev/null | wc -l`
+          assertNotEquals " resourcequota not set in project ${project};" 0 ${resourcequota}
         fi
       done
     }
@@ -26,13 +26,13 @@ data:
   nodes_test: |
     test_nodes_ready() {
       for node in ${NODES}; do
-        ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
-        assertEquals " node ${node} not ready;" "True" $ready
+        ready=`oc get node ${node} -o json 2>/dev/null | jq -r '.status.conditions[] | select(.type=="Ready") | .status' 2>/dev/null`
+        assertEquals " node ${node} not ready;" "True" ${ready}
       done
     }
     test_nodes_no_warnings() {
       for node in ${NODES}; do
-        warnings=`oc describe node/${node} | grep -A64 "^Events:" | grep "Warn" | wc -l`
+        warnings=`oc describe node/${node} 2>/dev/null | grep -A64 "^Events:" | grep -c "Warn"`
         assertEquals " node ${node} has warnings;" 0 ${warnings}
       done
     }
@@ -41,8 +41,8 @@ data:
   privileged_test: |
     test_security_context_privileged() {
       for project in ${USER_PROJECTS}; do
-        for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
-          count_privileged=`oc export po/${pod} -n ${project} -o json | jq -r '..|.securityContext?.privileged' | grep -c true`
+        for pod in `oc get po -n ${project} 2>/dev/null | cut -d' ' -f1 | tail -n +2`; do
+          count_privileged=`oc export po/${pod} -n ${project} -o json 2>/dev/null | jq -r '..|.securityContext?.privileged' | grep -c true`
           assertEquals " pod ${pod} in project ${project} runs with privileged security context;" 0 ${count_privileged}
         done
       done
@@ -50,8 +50,8 @@ data:
     suite_addTest test_security_context_privileged
   self_provisioner_test: |
     test_self_provisioner() {
-      count_self_provisioner=`oc adm policy who-can create projectrequests | grep system:authenticated | wc -l`
-      assertEquals " authenticated users must not create project requests;" 0 ${count_self_provisioner}
+      count_self_provisioner=`oc adm policy who-can create projectrequests 2>/dev/null | grep -c system:authenticated`
+      assertEquals " non-admin users must not create project requests;" 0 ${count_self_provisioner}
     }
     suite_addTest test_self_provisioner
 kind: ConfigMap

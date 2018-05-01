@@ -1,4 +1,4 @@
 rm *.png
 for file in `find . -type f | grep -v "\(png\|sh\)$"`; do
-  ditaa ${file}
+  ditaa --scale 2.5 ${file}
 done

@@ -1,7 +1,7 @@
 test_anyuid() {
-  scc_anyuid=`oc describe scc anyuid`
+  scc_anyuid=`oc describe scc anyuid 2>/dev/null`
   for project in ${USER_PROJECTS}; do
-    count_anyuid_default=`echo ${scc_anyuid} | grep "Users:.*system:serviceaccount:${project}:default" | wc -l`
+    count_anyuid_default=`echo ${scc_anyuid} | grep -c "Users:.*system:serviceaccount:${project}:default"`
     assertEquals " service account default in project ${project} has SCC anyuid;" 0 ${count_anyuid_default}
   done
 }

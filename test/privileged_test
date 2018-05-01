@@ -1,7 +1,7 @@
 test_security_context_privileged() {
   for project in ${USER_PROJECTS}; do
-    for pod in `oc get po -n ${project} | cut -d' ' -f1 | tail -n +2`; do
-      count_privileged=`oc export po/${pod} -n ${project} -o json | jq -r '..|.securityContext?.privileged' | grep -c true`
+    for pod in `oc get po -n ${project} 2>/dev/null | cut -d' ' -f1 | tail -n +2`; do
+      count_privileged=`oc export po/${pod} -n ${project} -o json 2>/dev/null | jq -r '..|.securityContext?.privileged' | grep -c true`
       assertEquals " pod ${pod} in project ${project} runs with privileged security context;" 0 ${count_privileged}
     done
   done

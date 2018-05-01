@@ -1,12 +1,12 @@
 test_nodes_ready() {
   for node in ${NODES}; do
-    ready=`oc get node ${node} -o json | jq -r '.status.conditions[] | select(.type=="Ready") | .status'`
-    assertEquals " node ${node} not ready;" "True" $ready
+    ready=`oc get node ${node} -o json 2>/dev/null | jq -r '.status.conditions[] | select(.type=="Ready") | .status' 2>/dev/null`
+    assertEquals " node ${node} not ready;" "True" ${ready}
   done
 }
 test_nodes_no_warnings() {
   for node in ${NODES}; do
-    warnings=`oc describe node/${node} | grep -A64 "^Events:" | grep "Warn" | wc -l`
+    warnings=`oc describe node/${node} 2>/dev/null | grep -A64 "^Events:" | grep -c "Warn"`
     assertEquals " node ${node} has warnings;" 0 ${warnings}
   done
 }
