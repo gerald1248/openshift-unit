@@ -6,7 +6,7 @@ Use `openshift-unit` to test those aspects of your OpenShift cluster that are no
 
 For example, you could assert that:
 
-* the groups `system:authenticated` and `system:authenticated:oauth` must not be given the role `self-provisioner`
+* non-admin users must not be given the role `self-provisioner`
 * service account `default` must not have security context constraint `anyuid` (ideally the rule would apply to all service accounts) 
 * pods in user projects must not run in privileged security context
 * and so on
@@ -62,12 +62,15 @@ $ make update
 This will refresh the configmap from the contents of the `test` folder.
 
 ## Cleanup
-The script `cleanup.sh` will remove the project `openshift-unit` and the rolebinding that gives the serviceaccount `openshift-unit` read-only access to all projects.
+Call `make clean` to remove the project `openshift-unit` and the rolebinding that gives the serviceaccount `openshift-unit` read-only access to all projects.
 
 ## Building the image
 Run `make build` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
 
 Tag the image as desired and upload to Docker Hub or a private registry as appropriate.
+
+## Test the test-runner
+Run `make test` to run the tests for the `openshift-unit` executable in the `bin` folder.
 
 ## Note on versions
 The default image on Docker Hub ships with the current stable build of the `oc` client. You may wish to adjust the version tag in the `docker-build.sh` script and create an image that matches your cluster exactly.
