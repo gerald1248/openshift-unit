@@ -1,0 +1,4 @@
+test_identity() {
+  assertEquals " expected identity;" 0 0
+}
+suite_addTest test_identity

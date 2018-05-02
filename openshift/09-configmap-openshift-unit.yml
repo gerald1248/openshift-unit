@@ -12,6 +12,13 @@ data:
   exports: |
     export USER_PROJECTS=`oc get projects 2>/dev/null | grep -v "\(openshift\|kube\|default\|logging\)" | cut -d' ' -f1 | tail -n +2`
     export NODES=`oc get nodes 2>/dev/null| cut -d' ' -f1 | tail -n +2`
+  identity_test: |
+    test_identity() {
+      assertEquals " expected identity;" 0 0
+    }
+    suite_addTest test_identity
+  ignore: |
+    identity_test
   limits_test: |
     test_project_quotas() {
       for project in ${USER_PROJECTS}; do
@@ -58,4 +65,4 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: openshift-unit
-  namespace: openshift-unit
+	namespace: openshift-unit
