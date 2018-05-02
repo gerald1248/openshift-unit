@@ -1,11 +1,35 @@
+#!/bin/sh
+
 test_no_params() {
   export OPENSHIFT_UNIT_DATADIR="" && ${PWD}/openshift-unit >/dev/null 2>&1
   assertEquals " call without parameters exit without error;" 0 $?
 }
 
 test_ignore() {
-  export OPENSHIFT_UNIT_DATADIR="${PWD}/test_ignore" && ${PWD}/openshift-unit #>/dev/null 2>&1
+  export OPENSHIFT_UNIT_DATADIR="${PWD}/test_ignore" && ${PWD}/openshift-unit >/dev/null 2>&1
   assertEquals " should pass with ignored failure;" 0 $? 
 }
+
+test_failure() {
+  export OPENSHIFT_UNIT_DATADIR="${PWD}/test_failure" && ${PWD}/openshift-unit >/dev/null 2>&1
+	assertNotEquals " should fail;" 0 $?
+}
+
+test_success() {
+  export OPENSHIFT_UNIT_DATADIR="${PWD}/test_success" && ${PWD}/openshift-unit >/dev/null 2>&1
+	assertEquals " should succeed;" 0 $?
+}
+
+test_incorrect_datadir() {
+  export OPENSHIFT_UNIT_DATADIR="/non/existent/dir" && ${PWD}/openshift-unit >/dev/null 2>&1
+	assertEquals " non-existent datadir should not fail;" 0 $?
+}
+
+for dependency in shunit2; do
+  if [ -z $(which $dependency) ]; then
+    echo "Missing dependency '$dependency'"
+    exit 1
+  fi
+done
 
 . shunit2

@@ -1,0 +1,4 @@
+test_success() {
+  assertEquals 0 0
+}
+suite_addTest test_success
