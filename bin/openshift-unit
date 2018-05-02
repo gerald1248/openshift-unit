@@ -1,8 +1,30 @@
 #!/bin/sh
+
 suite() {
-  datadir="/etc/openshift-unit.d/"
-  . ${datadir}exports
-  for testscript in `find ${datadir} -name \*_test -type f`; do
+  datadir=${OPENSHIFT_UNIT_DATADIR}
+  if [ -z ${datadir} ]; then
+    datadir="/etc/openshift-unit.d"
+  fi
+
+  # export frequently used queries
+  if [ -f ${datadir}/exports ]; then
+    . ${datadir}/exports
+  fi
+
+  # populate ignore array
+  ignore_array=()
+  if [ -f ${datadir}/ignore ]; then
+    while IFS= read -r line; do
+      ignore_array+=("${line}")
+    done < ${datadir}/ignore
+  fi
+
+  # process scripts, skipping ignored files
+  for testscript in `find ${datadir}/ -name \*_test -type f`; do
+    testscript_basename=`basename ${testscript}`
+    if [[ " ${ignore_array[@]} " =~ " ${testscript_basename} " ]]; then
+      continue
+    fi
     . ${testscript}
   done
 }

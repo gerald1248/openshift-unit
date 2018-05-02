@@ -1,0 +1,11 @@
+test_no_params() {
+  export OPENSHIFT_UNIT_DATADIR="" && ${PWD}/openshift-unit >/dev/null 2>&1
+  assertEquals " call without parameters exit without error;" 0 $?
+}
+
+test_ignore() {
+  export OPENSHIFT_UNIT_DATADIR="${PWD}/test_ignore" && ${PWD}/openshift-unit #>/dev/null 2>&1
+  assertEquals " should pass with ignored failure;" 0 $? 
+}
+
+. shunit2

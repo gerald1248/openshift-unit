@@ -5,9 +5,9 @@ SHUNIT2_VERSION=latest
 OC_VERSION=latest
 DOWNLOAD_ALWAYS=0
 
-for DEPENDENCY in jq curl head tail unzip; do
-  if [ -z $(which $DEPENDENCY) ]; then
-    echo "Missing dependency - '$DEPENDENCY' required"
+for dependency in jq curl head unzip; do
+  if [ -z $(which $dependency) ]; then
+    echo "Missing dependency '$dependency'"
     exit 1
   fi
 done

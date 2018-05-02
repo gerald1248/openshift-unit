@@ -1,0 +1,4 @@
+test_failure() {
+  assertEquals 0 1
+}
+suite_addTest test_failure
