@@ -1,17 +1,18 @@
 VERSION=0.1.0
 
 create:
-	./oc-create.sh
+	./create.sh
 
 test:
 	cd bin; ./openshift-unit_test 
+
 clean:
-	./cleanup.sh
+	./clean.sh
 
-build:
-	./docker-build.sh
+build-docker-image:
+	./build-docker-image.sh
 
-update:
+update-configmap:
 	./update-configmap.sh
 
 default: create
