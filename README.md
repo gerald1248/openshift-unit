@@ -57,7 +57,7 @@ OK
 ## Writing your own tests
 To add tests, populate the folder `test` with additional files (each containing one or more Bash functions and an instruction to add them to the test suite). To update the ConfigMap, run:
 ```
-$ make update
+$ make update-configmap
 ```
 This will refresh the configmap from the contents of the `test` folder.
 
@@ -65,7 +65,7 @@ This will refresh the configmap from the contents of the `test` folder.
 Call `make clean` to remove the project `openshift-unit` and the rolebinding that gives the serviceaccount `openshift-unit` read-only access to all projects.
 
 ## Building the image
-Run `make build` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
+Run `make build-docker-image` to create a bespoke test runner image. In many cases, the version of the `oc` client should be adjusted from `latest` to a version that matches your cluster.
 
 Tag the image as desired and upload to Docker Hub or a private registry as appropriate.
 
