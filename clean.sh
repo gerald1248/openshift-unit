@@ -1,3 +1,3 @@
 #!/bin/sh
-oc delete project/openshift-unit
-oc delete clusterrolebinding/openshift-unit
+oc delete --ignore-not-found project/openshift-unit
+oc delete --ignore-not-found clusterrolebinding/openshift-unit

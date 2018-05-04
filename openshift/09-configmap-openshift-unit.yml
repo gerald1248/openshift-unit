@@ -65,4 +65,4 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: openshift-unit
-	namespace: openshift-unit
+  namespace: openshift-unit
