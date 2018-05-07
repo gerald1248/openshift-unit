@@ -1,7 +1,0 @@
-kind: Project
-metadata:
-  annotations:
-    openshift.io/display-name: OpenShift unit tests
-  name: openshift-unit
-spec: {}
-status: {}

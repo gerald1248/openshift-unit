@@ -15,17 +15,14 @@ parameters:
   displayName: Name
   description: Name of each API object
   value: openshift-unit
-  reauired: true
 - name: NAMESPACE
   displayName: Project
   description: The project that is created for the test runner
   value: openshift-unit
-  required: true
 - name: SCHEDULE
   displayName: Schedule
   description: Schedule determining when and how often tests are run
   value: "30 0 * * *"
-  required: true
 objects:
 - apiVersion: v1
   kind: ConfigMap
@@ -61,20 +58,6 @@ objects:
     name: ${NAME}
   userNames:
   - "system:serviceaccount:${NAMESPACE}:${NAME}"
-- kind: RoleBinding
-  apiVersion: v1
-  groupNames: []
-  metadata:
-    name: system:deployers
-    namespace: ${NAMESPACE}
-  roleRef:
-    name: system:deployer
-  subjects:
-  -
-    kind: ServiceAccount
-    name: deployer
-  userNames:
-  - system:serviceaccount:${NAMESPACE}:deployer
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
