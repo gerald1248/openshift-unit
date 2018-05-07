@@ -40,10 +40,10 @@ objects:
       suite_addTest test_identity
 - apiVersion: v1
   kind: Project
-	metadata:
-	  name: ${NAME}
+  metadata:
+    name: ${NAME}
   annotations:
-	  openshift.io/display-name: OpenShift cluster tests
+    openshift.io/display-name: OpenShift cluster tests
 - kind: ServiceAccount
   apiVersion: v1
   metadata:
