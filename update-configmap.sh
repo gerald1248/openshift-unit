@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# fetch OPENSHIFT_UNIT_NAME and OPENSHIFT_UNIT_NAMESPACE
+. exports
+
 # updating requires deletion - can't create --from-file with same name
-oc delete -n openshift-unit --ignore-not-found=true configmap/openshift-unit
-oc create -n openshift-unit configmap openshift-unit --from-file=test/
+oc delete -n ${OPENSHIFT_UNIT_NAMESPACE} --ignore-not-found=true configmap/${OPENSHIFT_UNIT_NAME}
+oc create -n ${OPENSHIFT_UNIT_NAMESPACE} configmap ${OPENSHIFT_UNIT_NAME} --from-file=test/

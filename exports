@@ -1,0 +1,2 @@
+export OPENSHIFT_UNIT_NAME=mytests
+export OPENSHIFT_UNIT_NAMESPACE=mytests

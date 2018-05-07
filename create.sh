@@ -1,10 +1,13 @@
 #!/bin/sh
 
+# export OPENSHIFT_UNIT_NAME and OPENSHIFT_UNIT_NAMESPACE
+. exports
+
 # stop if project exists
-oc export project/openshift-unit >/dev/null 2>&1
+oc export project/${OPENSHIFT_UNIT_NAMESPACE} >/dev/null 2>&1
 if [ "$?" -eq "0" ]; then
-  echo "project openshift-unit found; run make clean first"
+  echo "project ${OPENSHIFT_UNIT_NAMESPACE} found; run make clean first"
 	exit 1
 fi
   
-find openshift -name \*.yml -type f -exec oc create -f {} \;
+oc new-app --file=openshift/template.yml --param='NAME'='${OPENSHIFT_UNIT_NAME}' --param='NAMESPACE'='${OPENSHIFT_UNIT_NAMESPACE}'
