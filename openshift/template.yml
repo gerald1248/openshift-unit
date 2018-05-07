@@ -1,0 +1,199 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: openshift-unit-template
+message: |-
+  Recurring job ${NAME} has been created in project ${NAMESPACE} with schedule ${SCHEDULE}.
+  For more information on using this template, see https://github.com/gerald1248/openshift-unit
+metadata:
+  name: openshift-unit-template
+  annotations:
+    description: |-
+      OpenShift cluster tests based on 'shunit2' and 'oc'
+parameters:
+- name: NAME
+  displayName: Name
+  description: Name of each API object
+  value: openshift-unit
+  reauired: true
+- name: NAMESPACE
+  displayName: Project
+  description: The project that is created for the test runner
+  value: openshift-unit
+  required: true
+- name: SCHEDULE
+  displayName: Schedule
+  description: Schedule determining when and how often tests are run
+  value: openshift-unit
+  required: true
+objects:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+  data:
+    identity_test: |
+      test_identity() {
+        assertEquals " expected identity;" 0 0
+      }
+      suite_addTest test_identity
+- apiVersion: v1
+  kind: Project
+	metadata:
+	  name: ${NAME}
+  annotations:
+	  openshift.io/display-name: OpenShift cluster tests
+- kind: ServiceAccount
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+    labels:
+      app: ${NAME}
+- kind: ClusterRoleBinding
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+    labels:
+      app: ${NAME}
+  roleRef:
+    kind: ClusterRole
+    name: cluster-reader
+  subjects:
+  -
+    kind: ServiceAccount
+    name: ${NAME}
+  userNames:
+  - system:serviceaccount:openshift-unit:openshift-unit
+- kind: RoleBinding
+  apiVersion: v1
+  groupNames: []
+  metadata:
+    name: system:deployers
+    namespace: ${NAMESPACE}
+  roleRef:
+    name: system:deployer
+  subjects:
+  -
+    kind: ServiceAccount
+    name: deployer
+  userNames:
+  - system:serviceaccount:openshift-unit:deployer
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+    labels:
+      app: ${NAME}
+  spec:
+    triggers:
+    - type: ConfigChange
+    replicas: 1
+    selector:
+      app: ${NAME}
+      deploymentconfig: openshift-unit
+    template:
+      metadata:
+        labels:
+          app: ${NAME}
+          deploymentconfig: openshift-unit
+      spec:
+        serviceAccountname: ${NAME}
+        serviceAccount: openshift-unit
+        containers:
+        - name: ${NAME}
+          image: gerald1248/openshift-unit
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          env:
+          - name: POD_NAMESPACE
+            value: openshift-unit
+          volumeMounts:
+          - name: ${NAME}-volume
+            mountPath: /etc/openshift-unit.d
+        volumes:
+        - name: ${NAME}-volume
+          configMap:
+            name: ${NAME}
+- apiVersion: batch/v2alpha1
+  kind: CronJob
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+    labels:
+      app: ${NAME}
+  spec:
+    schedule: ${SCHEDULE}
+    successfulJobsHistoryLimit: 1
+    failedJobsHistoryLimit: 1
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            serviceAccountname: ${NAME}
+            serviceAccount: openshift-unit
+            containers:
+            -
+              name: ${NAME}
+              image: gerald1248/openshift-unit
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 1Gi
+                requests:
+                  cpu: 100m
+                  memory: 512Mi
+              args:
+              - /bin/sh
+              - -c
+              - openshift-unit || true
+              env:
+              - name: POD_NAMESPACE
+                value: openshift-unit
+              volumeMounts:
+              - name: ${NAME}-volume
+                mountPath: /etc/openshift-unit.d
+            volumes:
+            - name: ${NAME}-volume
+              configMap:
+                name: ${NAME}
+            restartPolicy: Never
+- kind: LimitRange
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+    labels:
+      app: ${NAME}
+  spec:
+    limits:
+    -
+      type: Container
+      default:
+        cpu: 400m
+        memory: 1Gi
+      defaultRequest:
+        cpu: 200m
+        memory: 512Mi
+- kind: ResourceQuota
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    namespace: ${NAMESPACE}
+    labels:
+      app: ${NAME}
+  spec:
+    hard:
+      pods: "4"
+      requests.cpu: 800m
+      requests.memory: 2Gi
+      limits.cpu: 1600m
+      limits.memory: 4Gi
