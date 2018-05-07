@@ -9,5 +9,6 @@ if [ "$?" -eq "0" ]; then
   echo "project ${OPENSHIFT_UNIT_NAMESPACE} found; run make clean first"
 	exit 1
 fi
-  
-oc new-app --file=openshift/template.yml --param='NAME'='${OPENSHIFT_UNIT_NAME}' --param='NAMESPACE'='${OPENSHIFT_UNIT_NAMESPACE}'
+
+oc new-project ${OPENSHIFT_UNIT_NAMESPACE}
+oc new-app --file=openshift/template.yml --param='NAME'="${OPENSHIFT_UNIT_NAME}" --param='NAMESPACE'="${OPENSHIFT_UNIT_NAMESPACE}"
