@@ -60,7 +60,7 @@ objects:
     kind: ServiceAccount
     name: ${NAME}
   userNames:
-  - system:serviceaccount:openshift-unit:openshift-unit
+  - "system:serviceaccount:${NAMESPACE}:${NAME}"
 - kind: RoleBinding
   apiVersion: v1
   groupNames: []
@@ -74,7 +74,7 @@ objects:
     kind: ServiceAccount
     name: deployer
   userNames:
-  - system:serviceaccount:openshift-unit:deployer
+  - system:serviceaccount:${NAMESPACE}:deployer
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -88,15 +88,15 @@ objects:
     replicas: 1
     selector:
       app: ${NAME}
-      deploymentconfig: openshift-unit
+      deploymentconfig: ${NAME}
     template:
       metadata:
         labels:
           app: ${NAME}
-          deploymentconfig: openshift-unit
+          deploymentconfig: ${NAME}
       spec:
         serviceAccountname: ${NAME}
-        serviceAccount: openshift-unit
+        serviceAccount: ${NAME}
         containers:
         - name: ${NAME}
           image: gerald1248/openshift-unit
@@ -109,7 +109,7 @@ objects:
               memory: 512Mi
           env:
           - name: POD_NAMESPACE
-            value: openshift-unit
+            value: ${NAMESPACE}
           volumeMounts:
           - name: ${NAME}-volume
             mountPath: /etc/openshift-unit.d
@@ -133,7 +133,7 @@ objects:
         template:
           spec:
             serviceAccountname: ${NAME}
-            serviceAccount: openshift-unit
+            serviceAccount: ${NAME}
             containers:
             -
               name: ${NAME}
@@ -151,7 +151,7 @@ objects:
               - openshift-unit || true
               env:
               - name: POD_NAMESPACE
-                value: openshift-unit
+                value: ${NAMESPACE}
               volumeMounts:
               - name: ${NAME}-volume
                 mountPath: /etc/openshift-unit.d

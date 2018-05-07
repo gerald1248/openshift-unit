@@ -1,2 +1,2 @@
-export OPENSHIFT_UNIT_NAME=mytests
-export OPENSHIFT_UNIT_NAMESPACE=mytests
+export OPENSHIFT_UNIT_NAME=openshift-unit
+export OPENSHIFT_UNIT_NAMESPACE=cluster-tests
