@@ -1,7 +1,7 @@
 VERSION=0.1.0
 
 create:
-	./create.sh
+	./create.sh && ./update-configmap.sh
 
 test:
 	cd bin; ./openshift-unit_test 

@@ -25,6 +25,6 @@
 |                                   |         Test scripts|  |         |     Test scripts|
 |                                   |                     |  |         | {d}             |
 |                                   +---------------------+  |         +-----------------+
-|Namespace openshift–unit                                    |  
+|Namespace cluster–tests                                     |  
 \=-----------------------------------------------------------/
 

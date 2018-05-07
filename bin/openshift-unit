@@ -11,18 +11,10 @@ suite() {
     . ${datadir}/exports
   fi
 
-  # populate ignore array
-  ignore_array=()
-  if [ -f ${datadir}/ignore ]; then
-    while IFS= read -r line; do
-      ignore_array+=("${line}")
-    done < ${datadir}/ignore
-  fi
-
   # process scripts, skipping ignored files
   for testscript in `find ${datadir}/ -name \*_test -type f`; do
     testscript_basename=`basename ${testscript}`
-    if [[ " ${ignore_array[@]} " =~ " ${testscript_basename} " ]]; then
+		if [ `grep -c ${testscript_basename} ${datadir}/ignore` -ne 0 ]; then
       continue
     fi
     . ${testscript}
