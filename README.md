@@ -11,6 +11,10 @@ For example, you could assert that:
 * pods in user projects must not run in privileged security context
 * and so on
 
+Admin access is required at the start (to create project and the `cluster-reader` ClusterRoleBinding for the service account), but from then on access is strictly controlled. Logging is handled via `stdout` as usual and easily filtered in Kibana (or similar) by focusing on the chosen namespace.
+
+![Permissions](ditaa/permissions.png)
+
 The default set of tests includes the following:
 ```
 test
