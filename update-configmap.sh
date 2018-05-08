@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # fetch OPENSHIFT_UNIT_NAME and OPENSHIFT_UNIT_NAMESPACE
-. exports
+. ./exports
 
 # stop if project not available
 oc export project/${OPENSHIFT_UNIT_NAMESPACE} >/dev/null 2>&1
