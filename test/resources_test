@@ -1,0 +1,9 @@
+test_container_resources() {
+  for project in ${USER_PROJECTS}; do
+    for dc in `oc get dc -n ${project} -o json | jq -r '.items[].metadata.name'`; do
+		  resources_count=`oc get dc/${dc} -n ${project} | jq -r '.items[].spec.template.spec.containers[].resources' | grep -c "\(cpu\|memory\)"`
+			assertNotEquals " no resource limits/requests set for deployment ${dc} in project ${project};" 0 ${resources_count}
+    done
+  done
+}
+suite_addTest test_container_resources
