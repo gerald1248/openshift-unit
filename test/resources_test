@@ -1,6 +1,6 @@
 test_container_resources() {
   for project in ${USER_PROJECTS}; do
-    for dc in `oc get deploymentconfig -n ${project} -o json | jq -r '.items[].metadata.name'`; do
+    for dc in `oc get deploymentconfigs -n ${project} -o json | jq -r '.items[].metadata.name'`; do
 		  resources_count=`oc get deploymentconfig/${dc} -n ${project} -o json | jq -r '.spec.template.spec.containers[].resources' | grep -c "\(cpu\|memory\)"`
 			assertNotEquals " no resource limits/requests set for deployment ${dc} in project ${project};" 0 ${resources_count}
     done

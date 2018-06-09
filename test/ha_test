@@ -1,0 +1,17 @@
+test_high_availability() {
+  for svc in ${HA_SERVICES}; do
+    nodes=`oc get po --all-namespaces -o wide | grep ${svc} | \
+      awk '{ print $8 }'`
+    zones=""
+    for node in ${nodes}; do
+      zones="${zones} `oc get node/${node} -L zone | awk '{print $6}' | tail -n +2`"
+    done
+    zone_count=`echo ${zones} | tr ' ' '\n' | sort -u | wc -l`
+    ha=false
+    if [ "${zone_count}" -gt "2" ]; then
+      ha=true
+    fi
+    assertTrue " ${svc} must be distributed across three zones;" ${ha}
+  done
+}
+suite_addTest test_high_availability
