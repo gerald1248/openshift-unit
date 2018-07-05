@@ -250,7 +250,7 @@ suite_addTest test_high_availability
 
 # What's left? {bgcss=sky-gradient-18 .light-on-dark}
 
-<asciinema-player src="./assets/img/openshift-unit.json" poster="npt:0:10" idle-time-limit=1 speed=2 rows=18 font-size="medium"></asciinema-player>
+<asciinema-player src="./assets/img/openshift-unit.json" poster="npt:0:05" idle-time-limit=1 speed=2 rows=18 font-size="medium"></asciinema-player>
 
 # Why do today what can be done tomorrow? {bgcss=sky-gradient-23 .light-on-dark}
 
