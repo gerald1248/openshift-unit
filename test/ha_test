@@ -4,14 +4,18 @@ test_high_availability() {
       awk '{ print $8 }'`
     zones=""
     for node in ${nodes}; do
-      zones="${zones} `oc get node/${node} -L zone | awk '{print $6}' | tail -n +2`"
+      zones="${zones} `oc get node/${node} -L zone | \
+        awk '{print $6}' | \
+        tail -n +2`"
     done
     zone_count=`echo ${zones} | tr ' ' '\n' | sort -u | wc -l`
     ha=false
     if [ "${zone_count}" -gt "2" ]; then
       ha=true
     fi
-    assertTrue " ${svc} must be distributed across three zones;" ${ha}
+    assertTrue \
+      " ${svc} must be distributed across three zones;" \
+      ${ha}
   done
 }
 suite_addTest test_high_availability
