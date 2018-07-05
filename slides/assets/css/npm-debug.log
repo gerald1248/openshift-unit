@@ -1,0 +1,181 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/opt/local/bin/node',
+1 verbose cli   '/opt/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'sass' ]
+2 info using npm@1.4.13
+3 info using node@v0.10.28
+4 verbose cache add [ 'sass', null ]
+5 verbose cache add name=undefined spec="sass" args=["sass",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'sass',
+6 verbose parsed url   path: 'sass',
+6 verbose parsed url   href: 'sass' }
+7 silly lockFile 5d7463cd-sass sass
+8 verbose lock sass /Users/gerald/.npm/5d7463cd-sass.lock
+9 silly lockFile 5d7463cd-sass sass
+10 silly lockFile 5d7463cd-sass sass
+11 verbose addNamed [ 'sass', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile abea0ec1-sass sass@
+14 verbose lock sass@ /Users/gerald/.npm/abea0ec1-sass.lock
+15 silly addNameRange { name: 'sass', range: '*', hasData: false }
+16 verbose url raw sass
+17 verbose url resolving [ 'https://registry.npmjs.org/', './sass' ]
+18 verbose url resolved https://registry.npmjs.org/sass
+19 info trying registry request attempt 1 at 17:23:14
+20 http GET https://registry.npmjs.org/sass
+21 http 200 https://registry.npmjs.org/sass
+22 silly registry.get cb [ 200,
+22 silly registry.get   { date: 'Wed, 04 Jul 2018 15:23:14 GMT',
+22 silly registry.get     'content-type': 'application/json; charset=UTF-8',
+22 silly registry.get     'transfer-encoding': 'chunked',
+22 silly registry.get     connection: 'keep-alive',
+22 silly registry.get     'set-cookie': [ '__cfduid=dce92a7078897c1d71599f9738fc2adca1530717794; expires=Thu, 04-Jul-19 15:23:14 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+22 silly registry.get     'cache-control': 'max-age=300',
+22 silly registry.get     'cf-cache-status': 'HIT',
+22 silly registry.get     'cf-ray': '43529788ab3d9744-FRA',
+22 silly registry.get     etag: 'W/"707afaf64b12a078b5609baa007fc45e"',
+22 silly registry.get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+22 silly registry.get     'last-modified': 'Wed, 04 Jul 2018 00:43:10 GMT',
+22 silly registry.get     vary: 'accept-encoding, accept',
+22 silly registry.get     server: 'cloudflare',
+22 silly registry.get     'content-encoding': 'gzip' } ]
+23 silly addNameRange number 2 { name: 'sass', range: '*', hasData: true }
+24 silly addNameRange versions [ 'sass',
+24 silly addNameRange   [ '0.4.0',
+24 silly addNameRange     '0.4.1',
+24 silly addNameRange     '0.4.2',
+24 silly addNameRange     '0.4.3',
+24 silly addNameRange     '0.5.0',
+24 silly addNameRange     '1.0.0-beta.1',
+24 silly addNameRange     '1.0.0-beta.2',
+24 silly addNameRange     '1.0.0-beta.3',
+24 silly addNameRange     '1.0.0-beta.4',
+24 silly addNameRange     '1.0.0-beta.5.1',
+24 silly addNameRange     '1.0.0-beta.5.2',
+24 silly addNameRange     '1.0.0-beta.5.3',
+24 silly addNameRange     '1.0.0-rc.1',
+24 silly addNameRange     '1.0.0',
+24 silly addNameRange     '1.1.0',
+24 silly addNameRange     '1.1.1',
+24 silly addNameRange     '1.2.0',
+24 silly addNameRange     '1.2.1',
+24 silly addNameRange     '1.3.0',
+24 silly addNameRange     '1.3.1',
+24 silly addNameRange     '1.3.2',
+24 silly addNameRange     '1.4.0',
+24 silly addNameRange     '1.5.0',
+24 silly addNameRange     '1.5.1',
+24 silly addNameRange     '1.6.0',
+24 silly addNameRange     '1.6.1',
+24 silly addNameRange     '1.6.2',
+24 silly addNameRange     '1.7.0',
+24 silly addNameRange     '1.7.1',
+24 silly addNameRange     '1.7.2',
+24 silly addNameRange     '1.7.3',
+24 silly addNameRange     '1.8.0',
+24 silly addNameRange     '1.9.0' ] ]
+25 verbose addNamed [ 'sass', '1.9.0' ]
+26 verbose addNamed [ '1.9.0', '1.9.0' ]
+27 silly lockFile 6fb7901c-sass-1-9-0 sass@1.9.0
+28 verbose lock sass@1.9.0 /Users/gerald/.npm/6fb7901c-sass-1-9-0.lock
+29 silly lockFile 307abb09-ry-npmjs-org-sass-sass-1-9-0-tgz https://registry.npmjs.org/sass/-/sass-1.9.0.tgz
+30 verbose lock https://registry.npmjs.org/sass/-/sass-1.9.0.tgz /Users/gerald/.npm/307abb09-ry-npmjs-org-sass-sass-1-9-0-tgz.lock
+31 verbose addRemoteTarball [ 'https://registry.npmjs.org/sass/-/sass-1.9.0.tgz',
+31 verbose addRemoteTarball   '6199d8e91a08cadc9d5bcf4f223aa8ccdca257da' ]
+32 info retry fetch attempt 1 at 17:23:14
+33 verbose fetch to= /var/folders/qh/pvg56d8d3771mrdlhk_dxyn40000gp/T/npm-6460-mBbH8KMX/registry.npmjs.org/sass/-/sass-1.9.0.tgz
+34 http GET https://registry.npmjs.org/sass/-/sass-1.9.0.tgz
+35 http 200 https://registry.npmjs.org/sass/-/sass-1.9.0.tgz
+36 silly lockFile 307abb09-ry-npmjs-org-sass-sass-1-9-0-tgz https://registry.npmjs.org/sass/-/sass-1.9.0.tgz
+37 silly lockFile 307abb09-ry-npmjs-org-sass-sass-1-9-0-tgz https://registry.npmjs.org/sass/-/sass-1.9.0.tgz
+38 silly lockFile 6fb7901c-sass-1-9-0 sass@1.9.0
+39 silly lockFile 6fb7901c-sass-1-9-0 sass@1.9.0
+40 silly lockFile abea0ec1-sass sass@
+41 silly lockFile abea0ec1-sass sass@
+42 silly resolved [ { name: 'sass',
+42 silly resolved     description: 'A pure JavaScript implementation of Sass.',
+42 silly resolved     license: 'MIT',
+42 silly resolved     bugs: { url: 'https://github.com/sass/dart-sass/issues' },
+42 silly resolved     homepage: 'https://github.com/sass/dart-sass',
+42 silly resolved     repository:
+42 silly resolved      { type: 'git',
+42 silly resolved        url: 'git+https://github.com/sass/dart-sass.git' },
+42 silly resolved     author:
+42 silly resolved      { name: 'Natalie Weizenbaum',
+42 silly resolved        email: 'nweiz@google.com',
+42 silly resolved        url: 'https://github.com/nex3' },
+42 silly resolved     engines: { node: '>=0.11.8' },
+42 silly resolved     dependencies: { chokidar: '^2.0.0' },
+42 silly resolved     main: 'sass.dart.js',
+42 silly resolved     bin: { sass: 'sass.js' },
+42 silly resolved     keywords: [ 'style', 'scss', 'sass', 'preprocessor', 'css' ],
+42 silly resolved     version: '1.9.0',
+42 silly resolved     _id: 'sass@1.9.0',
+42 silly resolved     _npmVersion: '5.5.1',
+42 silly resolved     _nodeVersion: '8.9.1',
+42 silly resolved     _npmUser: { name: 'sassbot', email: 'sass.bot.beep.boop@gmail.com' },
+42 silly resolved     dist:
+42 silly resolved      { integrity: 'sha512-404qrJbeZaxhS/tXemM5CNQ1OuvqcVGiqYEYx9wkr7btCqaGn3pMsnC8x7Z4Mnv+QusXbDPNZzPVRdtd+hm5lg==',
+42 silly resolved        shasum: '6199d8e91a08cadc9d5bcf4f223aa8ccdca257da',
+42 silly resolved        tarball: 'https://registry.npmjs.org/sass/-/sass-1.9.0.tgz',
+42 silly resolved        fileCount: 4,
+42 silly resolved        unpackedSize: 688190,
+42 silly resolved        'npm-signature': '-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbPBgaCRA9TVsSAnZWagAAtdMP/0a9as1eE1AeyPDaVrJS\nPH2Kzx4ILydeXxy+/93a6uvbGnQEgsTRqaqcMP9Oi0vxYVfFArwf9cp5rqyh\nFiE7tb44EV0oh2L4ZsQ8AatPWSWmH7ZScZZokRE0AikPpK8XpCGz4NIdB6MI\nvmjUlvVvYKs2AzcyjWslV+TM5pFMEJuKOp7WmHRhZfvyStRD78LLnOGrhQAK\ncKdhmN0VD0+o09HXS0zrWkDnj0U0VKMeEW+mNRxF/Y+sml00WBmZm9MbrUwp\nnUDeR9kPQf0iadBe8yryRVzUkSNRjxYpE6+1VQCPvfJHSftIU+Vn38uod5Qs\nqGc2eZZK8Pr6E5ROlISxkHcfY0/57HwtXiiMDqK02G5WSzifaVLLF247u2w6\nkgLFUXeRbgeJ0DrNfnLTPKBRnVGHoWsZa8AAkAfHuotu6aWsIJ1f3rfTXakT\nn8lYnSoqBzr+Hvity0hq0pobyRs//DcgpKb9logJbUXDfw+/5Pd2CL8i/7uc\nBCTDgG27mTTTBxD4iqe4w6JO/6cuA5cK/mCnIwsC4YwDZFWHL+xVJk1xi9Hk\nkkJd5eyB7RIjckKNIERnmW6FGGIJA78Oq3CeHJ1a9dlvbtikqTIDfZ2qRznG\nwQxHoAZVag3gk0o+DOgdatVvc+B0sa9HOUWGVpTDsG8blFkxN2a6xTsmGlFj\n0bfT\r\n=e7I9\r\n-----END PGP SIGNATURE-----\r\n' },
+42 silly resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object] ],
+42 silly resolved     directories: {},
+42 silly resolved     _npmOperationalInternal:
+42 silly resolved      { host: 's3://npm-registry-packages',
+42 silly resolved        tmp: 'tmp/sass_1.9.0_1530664986700_0.4117626319715535' },
+42 silly resolved     _shasum: '6199d8e91a08cadc9d5bcf4f223aa8ccdca257da',
+42 silly resolved     _from: 'sass@',
+42 silly resolved     _resolved: 'https://registry.npmjs.org/sass/-/sass-1.9.0.tgz' } ]
+43 info install sass@1.9.0 into /opt/local/lib
+44 info installOne sass@1.9.0
+45 warn engine sass@1.9.0: wanted: {"node":">=0.11.8"} (current: {"node":"v0.10.28","npm":"1.4.13"})
+46 info /opt/local/lib/node_modules/sass unbuild
+47 verbose tar unpack /Users/gerald/.npm/sass/1.9.0/package.tgz
+48 silly lockFile 930cc7ad--opt-local-lib-node-modules-sass tar:///opt/local/lib/node_modules/sass
+49 verbose lock tar:///opt/local/lib/node_modules/sass /Users/gerald/.npm/930cc7ad--opt-local-lib-node-modules-sass.lock
+50 silly lockFile e949e1f5-erald-npm-sass-1-9-0-package-tgz tar:///Users/gerald/.npm/sass/1.9.0/package.tgz
+51 verbose lock tar:///Users/gerald/.npm/sass/1.9.0/package.tgz /Users/gerald/.npm/e949e1f5-erald-npm-sass-1-9-0-package-tgz.lock
+52 silly gunzTarPerm modes [ '755', '644' ]
+53 error Error: EACCES, mkdir '/opt/local/lib/node_modules/sass'
+53 error  { [Error: EACCES, mkdir '/opt/local/lib/node_modules/sass']
+53 error   errno: 3,
+53 error   code: 'EACCES',
+53 error   path: '/opt/local/lib/node_modules/sass',
+53 error   fstream_type: 'Directory',
+53 error   fstream_path: '/opt/local/lib/node_modules/sass',
+53 error   fstream_class: 'DirWriter',
+53 error   fstream_stack:
+53 error    [ '/opt/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+53 error      '/opt/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53',
+53 error      'Object.oncomplete (fs.js:107:15)' ] }
+54 error Please try running this command again as root/Administrator.
+55 error System Darwin 17.5.0
+56 error command "/opt/local/bin/node" "/opt/local/bin/npm" "install" "-g" "sass"
+57 error cwd /Users/gerald/git/github/gerald1248/openshift-unit/slides/assets/css
+58 error node -v v0.10.28
+59 error npm -v 1.4.13
+60 error path /opt/local/lib/node_modules/sass
+61 error fstream_path /opt/local/lib/node_modules/sass
+62 error fstream_type Directory
+63 error fstream_class DirWriter
+64 error code EACCES
+65 error errno 3
+66 error stack Error: EACCES, mkdir '/opt/local/lib/node_modules/sass'
+67 error fstream_stack /opt/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+67 error fstream_stack /opt/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53
+67 error fstream_stack Object.oncomplete (fs.js:107:15)
+68 verbose exit [ 3, true ]
