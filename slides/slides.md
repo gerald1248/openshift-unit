@@ -100,7 +100,7 @@ digraph I {
                            +-----------+
 ```
 
-# Get someone else to write the tests {bgcss=sky-gradient-13 .light-on-dark}
+# Let someone else write the tests {bgcss=sky-gradient-13 .light-on-dark}
 
 ```render_vegalite
 {
@@ -169,7 +169,7 @@ digraph I {
 ```
 <small>Source: "Programming, scripting and markup languages", [Stack Overflow survey 2018](https://insights.stackoverflow.com/survey/2018/)</small>
 
-# Operations {bgcss=sky-gradient-14 .light-on-dark}
+# Operational handbook {bgcss=sky-gradient-14 .light-on-dark}
 ```bash
 test_self_provisioner() {
   count_self_provisioner=`oc adm policy who-can create projectrequests \
@@ -179,7 +179,7 @@ test_self_provisioner() {
 }
 suite_addTest test_self_provisioner
 ```
-# Development {bgcss=sky-gradient-15 .light-on-dark}
+# Development guidelines {bgcss=sky-gradient-15 .light-on-dark}
 
 ```bash
 test_anyuid() {
@@ -260,7 +260,7 @@ Don't fret if it takes longer than expected to reach it
 
 Do take pride in the work not done
 
-# Unwind on GitHub {bgcss=sky-gradient-03 .light-on-dark}
+# <small>Thank you</small> {bgcss=sky-gradient-03 .light-on-dark}
 
 <small>OpenShift cluster tests [gerald1248/openshift-unit](https://github.com/gerald1248/openshift-unit)</small>
 
