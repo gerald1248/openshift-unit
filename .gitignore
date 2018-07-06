@@ -1,1 +1,7 @@
 downloads/
+.meta/
+slides/deck/assets/
+slides/deck/explain.html
+slides/deck/index.html
+slides/deck/rendered/
+slides/deck/slides.combined.md.txt

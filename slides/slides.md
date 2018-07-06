@@ -27,8 +27,8 @@ digraph G {
 digraph H {
     bgcolor=transparent;
     node [style="filled,solid",fillcolor=white,color=black,fontname="EB Garamond 12"];
-    "load tests";
     "chaos engineering";
+    "load tests";
 }
 ```
 
