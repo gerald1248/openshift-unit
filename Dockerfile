@@ -12,7 +12,6 @@ RUN groupadd app && useradd -g app app && \
         chown app:app /etc/openshift-unit.d
 RUN curl -o /usr/bin/shunit2 https://raw.githubusercontent.com/kward/shunit2/master/shunit2
 ADD test/*_test /etc/openshift-unit.d/
-ADD shunit2/shunit2 /usr/bin/
 ADD bin/openshift-unit /usr/bin/
 RUN chmod +x /usr/bin/openshift-unit
 WORKDIR /app
