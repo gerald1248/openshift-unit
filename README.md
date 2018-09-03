@@ -1,5 +1,8 @@
 # OpenShift cluster tests
 
+![Docker Automated](https://img.shields.io/docker/automated/gerald1248/openshift-unit.svg)
+![Docker Build](https://img.shields.io/docker/build/gerald1248/openshift-unit.svg)
+
 ![Overview of openshift-unit](ditaa/chart.png)
 
 Use `openshift-unit` to test those aspects of your OpenShift cluster that are not already covered by monitoring and health checks. Run tests periodically with read-only access to all projects.
