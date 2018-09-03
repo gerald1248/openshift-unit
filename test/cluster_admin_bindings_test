@@ -1,0 +1,11 @@
+test_cluster_admin_bindings() {
+
+  sa_with_cluster_admin=`oc get clusterrolebindings | grep "cluster-admin" | awk '{ print $5 }' | grep "[[:alnum:]]"`
+
+  count=`echo ${sa_with_cluster_admin} | wc -l`
+
+  assertEquals " there must be no service accounts with cluster admin rights, found ${count}: ${sa_with_cluster_admin};" 0 ${count}
+
+}
+
+suite_addTest test_cluster_admin_bindings

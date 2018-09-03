@@ -7,9 +7,6 @@ test:
 clean:
 	./clean.sh
 
-build-docker-image:
-	./build-docker-image.sh
-
 update-configmap:
 	./update-configmap.sh
 
