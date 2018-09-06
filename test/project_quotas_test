@@ -1,7 +1,8 @@
 test_project_quotas() {
   for project in ${USER_PROJECTS}; do
     # only proceed if no ClusterResourceQuota for the project set
-    if [ -z `oc describe AppliedClusterResourceQuota -n ${project} 2>/dev/null` ]; then
+    applied=`oc describe AppliedClusterResourceQuota -n ${project} >/dev/null`
+    if [ -z ${applied} ]; then
       resourcequota=`oc get resourcequota -n ${project} 2>/dev/null | wc -l`
       assertNotEquals " resourcequota not set in project ${project};" 0 ${resourcequota}
     fi
